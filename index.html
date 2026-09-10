@@ -67,6 +67,8 @@
     margin:0;
     letter-spacing:0.01em;
   }
+  .hero.reveal{transform:translateY(30px) scale(0.97); transition:opacity 1s cubic-bezier(.16,.8,.3,1), transform 1s cubic-bezier(.16,.8,.3,1);}
+  .hero.reveal.visible{transform:translateY(0) scale(1);}
 
   /* Video — full-bleed, autoplays on load */
   .video-section{padding:0 0 88px;}
@@ -77,6 +79,8 @@
     overflow:hidden;
     background:#000;
   }
+  .video-frame.reveal{transform:translateY(20px) scale(0.98);}
+  .video-frame.reveal.visible{transform:translateY(0) scale(1);}
   .video-frame iframe{
     position:absolute;
     inset:0;
@@ -122,8 +126,23 @@
   }
   .gallery img.loaded{opacity:1;}
   .gallery figure:hover img{transform:scale(1.045);}
+  .gallery figure:active img{transform:scale(0.96); transition:transform 0.25s ease;}
+  .gallery figure.reveal{transform:translateY(22px) scale(0.95); transition:opacity 0.75s cubic-bezier(.16,.8,.3,1), transform 0.75s cubic-bezier(.16,.8,.3,1), box-shadow 0.4s ease;}
+  .gallery figure.reveal.visible{transform:translateY(0) scale(1);}
   @media (max-width:980px){ .gallery{column-count:2; column-gap:18px;} .gallery figure{margin-bottom:18px;} }
-  @media (max-width:640px){ .gallery{column-count:1; column-gap:0; max-width:520px;} .gallery figure{margin-bottom:22px;} }
+  @media (max-width:640px){
+    header{padding:22px 20px;}
+    .brand{letter-spacing:0.24em; font-size:11px;}
+    .hero{padding:14px 20px 30px;}
+    .hero .eyebrow{font-size:10px; letter-spacing:0.22em; margin-bottom:10px;}
+    .section-label{font-size:10px; letter-spacing:0.2em; margin-bottom:18px;}
+    .gallery{column-count:2; column-gap:10px; padding:0 2px;}
+    .gallery figure{margin-bottom:10px; box-shadow:0 1px 2px rgba(30,28,25,0.06);}
+    section{padding:0 14px 64px;}
+    .video-section{padding-bottom:56px;}
+    .download-btn{padding:17px 40px; font-size:11.5px;}
+    footer{padding:36px 20px 48px;}
+  }
 
   .download{text-align:center;}
   .download-btn{
@@ -238,6 +257,7 @@
     const fig = document.createElement('figure');
     fig.dataset.index = i;
     fig.classList.add('reveal');
+    fig.style.transitionDelay = ((i % 6) * 0.06) + 's';
     const img = document.createElement('img');
     img.loading = 'lazy';
     img.src = thumbUrl(id, 1000);
