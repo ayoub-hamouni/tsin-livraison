@@ -68,7 +68,7 @@
     letter-spacing:0.01em;
   }
 
-  /* Video — full-bleed, click-to-play */
+  /* Video — full-bleed, autoplays on load */
   .video-section{padding:0 0 88px;}
   .video-frame{
     position:relative;
@@ -76,7 +76,6 @@
     aspect-ratio:16/9;
     overflow:hidden;
     background:#000;
-    cursor:pointer;
   }
   .video-frame iframe{
     position:absolute;
@@ -85,50 +84,6 @@
     height:100%;
     border:0;
   }
-  .video-poster{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    transition:transform 1.2s cubic-bezier(.16,.8,.3,1), filter 0.6s ease;
-  }
-  .video-frame:hover .video-poster{transform:scale(1.02);}
-  .video-shade{
-    position:absolute; inset:0;
-    background:linear-gradient(180deg, rgba(0,0,0,0.12) 0%, rgba(0,0,0,0.32) 100%);
-    transition:opacity 0.5s ease;
-  }
-  .play-btn{
-    position:absolute;
-    top:50%; left:50%;
-    transform:translate(-50%,-50%);
-    width:88px; height:88px;
-    border-radius:50%;
-    background:rgba(250,247,241,0.94);
-    border:0;
-    display:flex; align-items:center; justify-content:center;
-    cursor:pointer;
-    transition:transform 0.35s cubic-bezier(.16,.8,.3,1), background 0.35s ease;
-    box-shadow:0 10px 40px rgba(0,0,0,0.28);
-  }
-  .play-btn::after{
-    content:'';
-    position:absolute; inset:-14px;
-    border-radius:50%;
-    border:1px solid rgba(250,247,241,0.55);
-    animation:pulse-ring 2.6s ease-out infinite;
-  }
-  @keyframes pulse-ring{
-    0%{transform:scale(0.92); opacity:0.9;}
-    80%{transform:scale(1.35); opacity:0;}
-    100%{transform:scale(1.35); opacity:0;}
-  }
-  .video-frame:hover .play-btn{transform:translate(-50%,-50%) scale(1.08); background:#fff;}
-  .play-btn svg{fill:var(--wine); margin-left:4px;}
-  .video-frame.playing .play-btn,
-  .video-frame.playing .video-shade,
-  .video-frame.playing .video-poster{display:none;}
 
   section{
     padding:0 24px 90px;
@@ -143,29 +98,32 @@
   }
 
   .gallery{
-    max-width:1200px;
+    max-width:1440px;
     margin:0 auto;
-    column-count:4;
-    column-gap:10px;
+    column-count:3;
+    column-gap:28px;
   }
   .gallery figure{
-    margin:0 0 10px;
+    margin:0 0 28px;
     break-inside:avoid;
     overflow:hidden;
     cursor:pointer;
     position:relative;
     background:var(--wine-soft);
+    box-shadow:0 1px 3px rgba(30,28,25,0.05);
+    transition:box-shadow 0.4s ease;
   }
+  .gallery figure:hover{box-shadow:0 22px 48px rgba(30,28,25,0.18);}
   .gallery img{
     width:100%;
     display:block;
-    transition:transform 0.6s cubic-bezier(.16,.8,.3,1), opacity 0.5s ease;
+    transition:transform 0.7s cubic-bezier(.16,.8,.3,1), opacity 0.6s ease;
     opacity:0;
   }
   .gallery img.loaded{opacity:1;}
-  .gallery figure:hover img{transform:scale(1.035);}
-  @media (max-width:980px){ .gallery{column-count:3;} }
-  @media (max-width:640px){ .gallery{column-count:2; column-gap:7px;} .gallery figure{margin-bottom:7px;} }
+  .gallery figure:hover img{transform:scale(1.045);}
+  @media (max-width:980px){ .gallery{column-count:2; column-gap:18px;} .gallery figure{margin-bottom:18px;} }
+  @media (max-width:640px){ .gallery{column-count:1; column-gap:0; max-width:520px;} .gallery figure{margin-bottom:22px;} }
 
   .download{text-align:center;}
   .download-btn{
@@ -239,11 +197,7 @@
 
   <section class="video-section">
     <div class="video-frame reveal" id="videoFrame">
-      <img class="video-poster" src="https://drive.google.com/thumbnail?id=1RxcbsyHkP-ZZUzZxFN0HdE-L4xnKQhac&sz=w1920" alt="">
-      <div class="video-shade"></div>
-      <button class="play-btn" id="playBtn" aria-label="Play the film">
-        <svg width="26" height="26" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-      </button>
+      <iframe src="https://drive.google.com/file/d/1RxcbsyHkP-ZZUzZxFN0HdE-L4xnKQhac/preview?autoplay=1&amp;mute=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
     </div>
   </section>
 
@@ -286,7 +240,7 @@
     fig.classList.add('reveal');
     const img = document.createElement('img');
     img.loading = 'lazy';
-    img.src = thumbUrl(id, 500);
+    img.src = thumbUrl(id, 1000);
     img.alt = 'Photo ' + (i+1);
     img.addEventListener('load', () => img.classList.add('loaded'));
     fig.appendChild(img);
@@ -307,20 +261,6 @@
   }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
   revealEls.forEach(el => io.observe(el));
 
-  /* Video click-to-play */
-  const videoFrame = document.getElementById('videoFrame');
-  const playBtn = document.getElementById('playBtn');
-  function launchVideo(){
-    const iframe = document.createElement('iframe');
-    iframe.src = `https://drive.google.com/file/d/${VIDEO_ID}/preview?autoplay=1`;
-    iframe.allow = 'autoplay; fullscreen';
-    iframe.allowFullscreen = true;
-    videoFrame.appendChild(iframe);
-    videoFrame.classList.add('playing');
-  }
-  playBtn.addEventListener('click', (e) => { e.stopPropagation(); launchVideo(); });
-  videoFrame.addEventListener('click', () => { if (!videoFrame.classList.contains('playing')) launchVideo(); });
-
   /* Lightbox */
   const lightbox = document.getElementById('lightbox');
   const lbImg = document.getElementById('lbImg');
@@ -336,7 +276,7 @@
     lbImg.classList.remove('shown');
     const img = new Image();
     img.onload = () => { lbImg.src = img.src; requestAnimationFrame(() => lbImg.classList.add('shown')); };
-    img.src = thumbUrl(PHOTO_IDS[current], 1600);
+    img.src = thumbUrl(PHOTO_IDS[current], 2000);
     lbCount.textContent = (current+1) + ' / ' + PHOTO_IDS.length;
   }
   function closeLightbox(){ lightbox.classList.remove('open'); }
