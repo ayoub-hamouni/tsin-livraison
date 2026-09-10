@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tsin — Hamouni Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Work+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FAF7F1;
+    --ink:#1E1C19;
+    --ink-soft:rgba(30,28,25,0.6);
+    --line:rgba(30,28,25,0.12);
+    --wine:#6E2430;
+    --wine-soft:rgba(110,36,48,0.08);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Work Sans', sans-serif;
+    font-weight:300;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  a{color:inherit;}
+  header{
+    padding:34px 24px 18px;
+    text-align:center;
+    border-bottom:1px solid var(--line);
+  }
+  .brand{
+    font-family:'Work Sans', sans-serif;
+    font-size:12px;
+    letter-spacing:0.32em;
+    text-transform:uppercase;
+    color:var(--ink);
+    font-weight:500;
+  }
+  .brand-sub{
+    margin-top:6px;
+    font-size:10.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+  }
+  .hero{
+    text-align:center;
+    padding:56px 24px 28px;
+  }
+  .hero .eyebrow{
+    font-size:11.5px;
+    letter-spacing:0.26em;
+    text-transform:uppercase;
+    color:var(--wine);
+    margin-bottom:16px;
+    font-weight:500;
+  }
+  .hero h1{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-style:normal;
+    font-size:clamp(46px,10vw,88px);
+    margin:0 0 14px;
+    letter-spacing:0.01em;
+  }
+  .hero p{
+    font-size:15px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:0;
+    font-family:'Fraunces', serif;
+  }
+  section{
+    padding:20px 24px 64px;
+  }
+  .video-section{padding-top:8px;}
+  .section-head{
+    text-align:center;
+    margin:0 0 30px;
+  }
+  .section-head .kicker{
+    font-size:11px;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color:var(--wine);
+    margin-bottom:10px;
+    font-weight:500;
+  }
+  .section-head h2{
+    font-family:'Fraunces', serif;
+    font-weight:400;
+    font-size:30px;
+    margin:0;
+  }
+  .section-head .count{
+    font-size:12.5px;
+    color:var(--ink-soft);
+    margin-top:8px;
+  }
+  .video-frame{
+    position:relative;
+    width:100%;
+    max-width:920px;
+    margin:0 auto;
+    aspect-ratio:16/9;
+    border:1px solid var(--line);
+    overflow:hidden;
+    background:#000;
+    box-shadow:0 30px 70px rgba(30,28,25,0.14);
+  }
+  .video-frame iframe{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    border:0;
+  }
+  .gallery{
+    max-width:1180px;
+    margin:0 auto;
+    column-count:4;
+    column-gap:10px;
+  }
+  .gallery figure{
+    margin:0 0 10px;
+    break-inside:avoid;
+    overflow:hidden;
+    cursor:pointer;
+    position:relative;
+    background:var(--wine-soft);
+  }
+  .gallery img{
+    width:100%;
+    display:block;
+    transition:transform 0.5s ease, opacity 0.4s ease;
+    opacity:0;
+  }
+  .gallery img.loaded{opacity:1;}
+  .gallery figure:hover img{transform:scale(1.035);}
+  @media (max-width:980px){ .gallery{column-count:3;} }
+  @media (max-width:640px){ .gallery{column-count:2; column-gap:7px;} .gallery figure{margin-bottom:7px;} }
+
+  .download{text-align:center; padding-top:8px;}
+  .download-btn{
+    display:inline-block;
+    padding:18px 48px;
+    background:var(--wine);
+    color:var(--bg);
+    text-decoration:none;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    font-size:12.5px;
+    font-weight:500;
+    border-radius:2px;
+    transition:opacity 0.25s ease;
+  }
+  .download-btn:hover{opacity:0.85;}
+  .download-help{
+    max-width:560px;
+    margin:24px auto 0;
+    font-size:13px;
+    color:var(--ink-soft);
+    text-align:center;
+  }
+  .download-help strong{color:var(--ink);font-weight:600;}
+
+  footer{
+    text-align:center;
+    padding:48px 24px 64px;
+    font-size:12px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--line);
+  }
+  footer .studio{
+    font-family:'Fraunces', serif;
+    font-size:17px;
+    color:var(--ink);
+    margin-bottom:10px;
+  }
+  footer a{text-decoration:none;border-bottom:1px solid var(--line);}
+
+  /* Lightbox */
+  .lightbox{
+    position:fixed; inset:0; background:rgba(30,28,25,0.96);
+    display:none; align-items:center; justify-content:center;
+    z-index:1000; padding:24px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:100%; max-height:88vh; box-shadow:0 20px 60px rgba(0,0,0,0.5);}
+  .lightbox-close, .lightbox-prev, .lightbox-next{
+    position:fixed; background:none; border:0; color:#FAF7F1; cursor:pointer;
+    font-family:'Work Sans', sans-serif; font-size:15px; letter-spacing:0.05em;
+  }
+  .lightbox-close{top:26px; right:32px; font-size:28px; line-height:1;}
+  .lightbox-prev{left:24px; top:50%; transform:translateY(-50%); font-size:34px; padding:12px;}
+  .lightbox-next{right:24px; top:50%; transform:translateY(-50%); font-size:34px; padding:12px;}
+  .lightbox-count{position:fixed; bottom:26px; left:50%; transform:translateX(-50%); color:rgba(250,247,241,0.7); font-size:12px; letter-spacing:0.1em;}
+</style>
+</head>
+<body>
+
+  <header>
+    <div class="brand">Hamouni Studio</div>
+    <div class="brand-sub">Photographie &middot; Vidéo &middot; Direction Artistique</div>
+  </header>
+
+  <div class="hero">
+    <div class="eyebrow">Restitution &mdash; Événement 2026</div>
+    <h1>Tsin</h1>
+    <p>Merci pour ce moment partagé. Voici votre film et vos photos.</p>
+  </div>
+
+  <section class="video-section">
+    <div class="video-frame">
+      <iframe id="mainVideo" src="https://drive.google.com/file/d/1RxcbsyHkP-ZZUzZxFN0HdE-L4xnKQhac/preview?autoplay=1&mute=1" allow="autoplay; fullscreen" allowfullscreen></iframe>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div class="kicker">Galerie</div>
+      <h2>Les photos</h2>
+      <div class="count">119 photos &mdash; cliquez pour agrandir</div>
+    </div>
+    <div class="gallery" id="gallery"></div>
+  </section>
+
+  <section class="download">
+    <div class="section-head">
+      <div class="kicker">Tout récupérer</div>
+      <h2>Télécharger</h2>
+    </div>
+    <a class="download-btn" href="https://drive.google.com/drive/folders/1pc3XqV9hqrwUx7Gv6GR_XoecZ_hwU4BT?usp=sharing" target="_blank" rel="noopener">Télécharger tout</a>
+    <p class="download-help">
+      Ce bouton ouvre le dossier Google Drive complet. Une fois dessus, sélectionnez tous les fichiers (<strong>Ctrl+A</strong> sur PC ou <strong>Cmd+A</strong> sur Mac), puis cliquez sur l'icône de téléchargement : Google Drive prépare automatiquement un fichier ZIP avec le film et toutes les photos en haute résolution.
+    </p>
+  </section>
+
+  <footer>
+    <div class="studio">Hamouni Studio</div>
+    <div>ayoubhamouni.contact@gmail.com &middot; 06 59 08 53 55</div>
+    <div style="margin-top:6px;"><a href="https://www.instagram.com/hamouni.ay" target="_blank" rel="noopener">@hamouni.ay</a></div>
+  </footer>
+
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lbClose">&times;</button>
+    <button class="lightbox-prev" id="lbPrev">&#8249;</button>
+    <img id="lbImg" src="" alt="">
+    <button class="lightbox-next" id="lbNext">&#8250;</button>
+    <div class="lightbox-count" id="lbCount"></div>
+  </div>
+
+<script>
+  const PHOTO_IDS = ["158ogpH9j6JNLSkpkb2QjhSfOUf5BRjVl", "1tuUEuwen6Jk7a_zRVi_5SH1TNR3Pf32C", "1Pyd5t21G1z-m-21G7dkmayzm4UVZRz5i", "1WZmkc4eRv4z7UxV18PqxLcrgacWv5fB6", "1s00EoyJXZtu3ofOMl7mysi2NmAx6UmOQ", "1G9v1hG6Vv7B5Cka6K2btqDUflQl4b426", "1smt0IESbvM72Yn6oIBc42lwMCXOHyrtw", "1fuat_QMUTq-nkwPrJYxAdkjFabaWAnvp", "1oOUzVS8kldjr6BAtvGvrENGdM8pm2nvC", "1JfdkCagwRnuM5pE0qd4wBo7yiIH0pk5S", "1xkLb_GAo6sA7ixglnC1OikxsKbllJDHe", "1X3XgbViz-GyC2h-8LOXecqXi_9djuUMl", "1b-A8p4KUQb7tatGnMeNkW6P2ydlS6VkL", "1jqs60TszZiOJhnH4V9adZ41_MSAS_6oX", "1oJa8VjhEg2YzUxa2FfQvVhX3UwUYcGH3", "1GHeJjlPGPtMcBdCeTCeeTaaPkwUqczKE", "1c1jeOUkwKB7g-FfPD5ApPt-KAwUek9tf", "1naH6waMcfY63HdyoU_VFJB0juwfhC1Lv", "1SqZHKcItBhOmTAjpPU2Aq2ozZ1aXEodp", "1AAkPlaA54bbGgQ4id6ZlkNCV0sSpdDFi", "1MQbkzhKI75TsahwvfJ1dbV6LbLsWPFQ9", "1IfNJiTjSE0AOWiXuHYZVmX7XZuENuvD4", "1ndMUOcBDC4KeYq2grnMs2_fGzwYrRGsz", "1Ctoh3jAm07isyCgOC6J19DN0nmGWQrlu", "1HeCydjsgzlmtdzjBRtGIExP76ZwTNItc", "1srmndQFdSbDwPCiKIzJ9wyqhipVzAPNQ", "18kDr-QPAR3LxjN9s6PpCV5XBvq67th1Z", "1JuADwmEjt1wKmo0lmczeiqdAEl67WqT-", "1rjlNFolNr8XPOm_7A1k8vnA4cKBfYnpl", "1018afqf509nH3BGvx71N78-ALzmNEIZ3", "1Qz5R6HzAxY2KYGa4-s_cQYkic_o_qSkM", "1FYc2c1vx0g2fu9b2R_V6DRupHKB8ongj", "1sfoG2W0C4AAnLfBggYX_rN7x0W-Ea4Zs", "1D-GpZG6NV0R_HTcb6UMkCBFQpg2qYynQ", "1PeAXPtolvlsGc8Nm8j8Yi3wopHY7Ky9p", "1rwqB9TMF2II0iL5zELxdmNp-Xb2oWX86", "1mkBRA7zl_56Urm_Au8hOGozQiarCdAFk", "1JR9bP9c2emF_dZ8nLWtm3VyYaOu3fjQG", "1CXOmomsjy51SvgCaxLcG81ekZjIvScCw", "1u2W4FgD4KBf-3gr4NSYjBojIjYyWjxU7", "1vX4ii-2NSaKfE13OADpt6OCU4mJXVZ6R", "1hG6jx_GDM2i0sMnXi3Z5OTonVhqbJrWW", "1G-ul9fjTbISGqHe9zUe-MaP9c3cYUnV3", "1SmiKqZRL0wlPmwODvBdpFcwQVSP0Si82", "1wexENUWApNNlWyjBEaqOLhZHIinapXQ4", "1jMmQ-bsZYfrF-PvfwC5ieRqsiQY-JLXa", "19vDySad1Wtug58D4N9w-dLC9IKTkDbYP", "1aqgjUe2_VTqbSixPo1M0sAXr2wBYkqAg", "1CpwPaCX-zhSxIecIt7bA1gr-LXtm688z", "17-XEt-9mXV7J5EJxzac12Q2BDfZQQLc-", "18_MIWrE1iOHr0pD1020UrzMJDgP1OWDd", "1-GhZWzYhs2nSelyACUqpeW3ZPUvd_edD", "1hZNsimjTpgPnuzDCwbpT6mx_yaV1tKmz", "1moQaabuHuExhP260Lma-05EKXVidTyFG", "1kf-1oFfS438oUWdGpMOgigb_-Qf4hEk2", "1Cwj9BS_yTjA80upKBaYgjrJ6Z5FDkvNW", "1sgRRBNsS42BlR3FPn-mA8AezNGQP5cqo", "1MWPD09R_4nqxgJ8i30mduSjw3X4-C0AP", "1HgfJEZeArJ_b1h8uPX0yPIlxVw3Jkpuh", "1Y0CjoR9h1yvPjSGQU4v-CX8neVJZl3lM", "1hdO1PhlRsAMg-vP-0FMgsMWB1UwlVrFq", "188MjSV3hq6ek86UcW6ult-WqzVezOuJt", "1zncsiHHvOxSsmS_rWDcJ4mMtka797z2w", "1a5KVtK_wNqOO9frWKbepgTouwSO8uSbU", "1da6mwZIwHGMa-x2txdu1zlAqEN8foGCK", "1YpVO7OJ_VM4JlbBxLljOBE99pDokKBCy", "19Im4V36CzSkYSAsdpoWXR9623bVAwW-s", "1gN0NaSzcanWCNpt9P5NDKjyoISvgfoAz", "1ljiURjJ1Is_2EgkyWU-Kx3nQPqzlzykI", "1IP0M-cIcEWjCwFQQvNzqedZy61DMvoUG", "1rhUyoigSySeMed-KJcQN3K5VJwOBDQYU", "1Dsk8P1SAOs9Yw2QF-uPA_7Vou01E3Fxi", "1k19PB_I38ImARd6u5I42JbS0X4bVzzii", "1zTdslrlcuMl9HSZy_4h1-BdVG3cF97L5", "1oVwJF1znQuSKeGYtPFGKs8e1MCsFdJzo", "1tBLymZP00k3lySuUEGgd9CoSXj4aso6i", "1tz68T2srR1f1oznSngk9diDfxrDXsYof", "1jHZeL5BVZYB571ItPsXbwKkw-6zmfeAF", "1PRTAA32QFX8_t9Hac4tUGP_M0ipTRxK5", "1Y-MJ3Rfv7J_mLwU-CkB3dAvcdcdCqFF5", "1NDPfUwZoTevgCOvtKBkgt9AnrWDRUij9", "1KSV65jo2c_04-uJofEO0qEq1a0kQf1Bh", "1KcoPUoSLLq12cvEAlw9Q7J3Gx-OGzZL0", "1g6BJ8Aco_BZHtAmHJjrB-eYWn7f2XtPe", "1-o1Kdzdoyr1YYk3eH84YAdKwukqI8VZW", "1YRfb1rk4vlVQ3t-w3JakVEtbK_aEOw6p", "1nRgIpNZcDKnWuPlRWir7YAxfbT4d0fud", "1nj5snZgLAeJX2l4djGJuDZmY5AbVO4fr", "17Uz4PpBevjbVEPw_eu6qKmHeSVvja2RX", "1n6FS7MYXlhRnbuoJOhjdqPkjKMiDIj9w", "1YkHaqL0VWXcv73XNqBvcnH-nGv8raFaf", "1CI76-eHjzakPcIrNWBiBj3iY1B-0dx-Y", "1OeXBS1oiRG4A4O1GRAjHzJaNLPjl26Bf", "10izEuu3y_q0fj89AtxpG7K7nK7tn48by", "1HGdmi2AzrjE5VFc6XVqumlrrmAa7I33X", "15zESNBls0O0KWM8aoQC2AjNgCAbZ_MnW", "1OLDqDVx58hfgXSAvda-eGJr9Kx7ZF77W", "1xv0GdaCkPzMfrqdlOsK6qZ-_YRGtiRPy", "1ierWPyuKpGWlH_FzoLaM3i2M5IQPAcwi", "1_pHGQvgw3qtz4gidXbO-dZ18HEsgP0l7", "1TMGIAoJ2kteEAmH8slGyXRDCDvt77sRQ", "1pB-B_AkahesaaUxNpDggOEE4Qi1XbZU2", "1N9KHag9UgG8TQZ-leT2SnpBVSgs_V2NV", "1PVSX9NQHGUNxEH1t29mZmBpIKFtpqA86", "1FfVB0pcSnRfzjw6_DyIPaVtvC4SSlQYS", "1Bakb2rH5zY2ePs-XBRuMQHzoXmoantsr", "1qLKLxp02EMCl-Kp4VpuumYR3iJiaQkEM", "10_LAFiaHBPCVbQ4QN-Gm8dUyGXYGS0Y-", "1RsOvLy8V71Amba_C2H0wS-K4Lkj3KXDs", "16s5l4oThL51DQqX8ct5Ef8NzbXH-kIu6", "1ByOCXlxcECCbXo1TvO4DWTGc261QNLpv", "1XaNTBkpHPHQwM118PdlAIC-p14liZV-C", "1diPAQJuSMZyIlad6A4vRQITQ7sqAIMuK", "1Abcs0miEmLQwZcLXWj6D8e9Ao3l8L6X3", "1x42KC1dIuwVTHyFRUAnNUCURynAOWtuN", "1JwBZ4rFnwqqd8cl8yE1oRHYsNkLQIHIX", "1sWyceizQeGNX7XA1OVnGhhYdt_JmkzBV", "1twZwaq-ITMmzKFRh7HgiJaK9rT6d2LxF", "1TqePP63iQd_aWdTTVXLQBbd0hjzjaK6U"];
+
+  const thumbUrl = (id, size) => `https://drive.google.com/thumbnail?id=${id}&sz=w${size}`;
+
+  const gallery = document.getElementById('gallery');
+  const frag = document.createDocumentFragment();
+  PHOTO_IDS.forEach((id, i) => {
+    const fig = document.createElement('figure');
+    fig.dataset.index = i;
+    const img = document.createElement('img');
+    img.loading = 'lazy';
+    img.src = thumbUrl(id, 500);
+    img.alt = 'Photo ' + (i+1);
+    img.addEventListener('load', () => img.classList.add('loaded'));
+    fig.appendChild(img);
+    fig.addEventListener('click', () => openLightbox(i));
+    frag.appendChild(fig);
+  });
+  gallery.appendChild(frag);
+
+  const lightbox = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lbImg');
+  const lbCount = document.getElementById('lbCount');
+  let current = 0;
+
+  function openLightbox(i){
+    current = i;
+    updateLightbox();
+    lightbox.classList.add('open');
+  }
+  function updateLightbox(){
+    lbImg.src = thumbUrl(PHOTO_IDS[current], 1600);
+    lbCount.textContent = (current+1) + ' / ' + PHOTO_IDS.length;
+  }
+  function closeLightbox(){ lightbox.classList.remove('open'); }
+  function next(){ current = (current+1) % PHOTO_IDS.length; updateLightbox(); }
+  function prev(){ current = (current-1+PHOTO_IDS.length) % PHOTO_IDS.length; updateLightbox(); }
+
+  document.getElementById('lbClose').addEventListener('click', closeLightbox);
+  document.getElementById('lbNext').addEventListener('click', next);
+  document.getElementById('lbPrev').addEventListener('click', prev);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('open')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowRight') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
+</script>
+
+</body>
+</html>
